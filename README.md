@@ -3,7 +3,6 @@
 DevCombineMapApp is a mobile application developed with React Native using Expo. The app enables users to log in, fetch data from a backend server, and display detailed location markers on an interactive map.
 
 ## Table of Contents
-- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Architecture](#architecture)
@@ -12,11 +11,6 @@ DevCombineMapApp is a mobile application developed with React Native using Expo.
 - [Folder Structure](#folder-structure)
 - [Additional Information](#additional-information)
 
-## Features
-- User Login with JWT authentication.
-- Token Expiration Handling to redirect users upon token expiry.
-- Interactive map with detailed location markers.
-- Secure token storage with AsyncStorage.
 
 ## Installation
 
