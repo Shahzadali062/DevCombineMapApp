@@ -1,50 +1,103 @@
-# Welcome to your Expo app 👋
+# DevCombineMapApp
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+DevCombineMapApp is a mobile application developed with React Native using Expo. The app enables users to log in, fetch data from a backend server, and display detailed location markers on an interactive map.
 
-## Get started
+## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Architecture](#architecture)
+- [Screens Overview](#screens-overview)
+- [API Endpoints](#api-endpoints)
+- [Folder Structure](#folder-structure)
+- [Additional Information](#additional-information)
 
-1. Install dependencies
+## Features
+- User Login with JWT authentication.
+- Token Expiration Handling to redirect users upon token expiry.
+- Interactive map with detailed location markers.
+- Secure token storage with AsyncStorage.
 
-   ```bash
+## Installation
+
+### Prerequisites
+- Node.js and npm installed.
+- Expo CLI globally installed (`npm install -g expo-cli`).
+
+### Steps
+1. **Clone the repository**:
+   ```sh
+   git clone <repository-url>
+   cd DevCombineMapApp
+   ```
+
+2. **Install dependencies**:
+   ```sh
    npm install
    ```
 
-2. Start the app
-
-   ```bash
-    npx expo start
+3. **Start the Expo server**:
+   ```sh
+   expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Usage
+1. Start the app.
+2. Log in using the credentials provided by the backend:
+   - **Username**: `user`
+   - **Password**: `password`
+3. View locations on the map.
+4. Tap on the markers to view detailed information about each location.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Architecture
+- **Frontend**: Built with React Native using TypeScript and Expo.
+- **Backend**: REST API implemented in Golang that uses JWT-based authentication.
+- **Map Integration**: Using `react-native-maps` to provide map functionality and display markers.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Screens Overview
 
-## Get a fresh project
+### 1. Login Screen (`index.tsx`)
+- Allows users to authenticate using their username and password.
+- Displays error messages for invalid credentials or missing fields.
 
-When you're ready, run:
+### 2. Map Screen (`MapScreen.tsx`)
+- Displays an interactive map using `react-native-maps`.
+- Fetches locations from the backend server after authentication.
+- Displays markers for each location with detailed information (address).
+- Handles expired tokens by redirecting users back to the login screen.
 
-```bash
-npm run reset-project
+## API Endpoints
+- **POST `/login`**: Authenticates users and generates an access token.
+  - **Request Body**: `{ "username": "string", "password": "string" }`
+  - **Response**: `{ "access_token": "string", "refresh_token": "string" }`
+
+- **GET `/locations`**: Fetches location data for authenticated users.
+  - **Headers**: `Authorization: Bearer <access_token>`
+  - **Response**: An array of location objects containing latitude, longitude, and formatted address.
+
+## Folder Structure
+
+```
+DevCombineMapApp
+├── app
+│   ├── index.tsx                # Login Screen
+│   ├── MapScreen.tsx            # Map Screen with locations
+├── assets
+├── components                   # Shared UI components
+├── constants                    # Color and theme definitions
+├── hooks                        # Custom hooks
+├── node_modules                 # Node dependencies
+├── package.json                 # Project dependencies and scripts
+├── README.md                    # Project documentation
+└── ...
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Additional Information
 
-## Learn more
+### Troubleshooting Tips
+- **Login Issues**: Ensure that the backend server is running and reachable via the correct IP address.
+- **Token Expiration**: The app checks token validity before fetching location data. If the token is expired, the user will be redirected to the login screen.
 
-To learn more about developing your project with Expo, look at the following resources:
+### Contact
+For any issues or questions, feel free to reach out to the project maintainer at [shahzad18111062@gmail.com].
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
