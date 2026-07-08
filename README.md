@@ -1,103 +1,288 @@
 # DevCombineMapApp
 
-DevCombineMapApp is a mobile application developed with React Native using Expo. The app enables users to log in, fetch data from a backend server, and display detailed location markers on an interactive map.
+A React Native + Expo mobile application that allows users to log in, store an authentication token securely, fetch protected location data from a backend API, and display valid locations as markers on an interactive map.
 
-## Table of Contents
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Architecture](#architecture)
-- [Screens Overview](#screens-overview)
-- [API Endpoints](#api-endpoints)
-- [Folder Structure](#folder-structure)
-- [Additional Information](#additional-information)
+This project demonstrates mobile authentication, REST API integration, secure local token storage, and map-based location visualization using React Native Maps.
 
-## Features
-- User Login with JWT authentication.
-- Token Expiration Handling to redirect users upon token expiry.
-- Interactive map with detailed location markers.
-- Secure token storage with AsyncStorage.
+---
 
-## Installation
+## 🚀 Features
 
-### Prerequisites
-- Node.js and npm installed.
-- Expo CLI globally installed (`npm install -g expo-cli`).
+- User login screen with username and password validation
+- JWT-based authentication flow
+- Secure token storage using AsyncStorage
+- Protected API request with Bearer token
+- Interactive map using React Native Maps
+- Dynamic location markers
+- Marker callouts with formatted address details
+- Loading and error states
+- Invalid location filtering
+- Expo Router navigation
+- TypeScript-based React Native structure
+- Android and iOS support through Expo
 
-### Steps
-1. **Clone the repository**:
-   ```sh
-   git clone <repository-url>
-   cd DevCombineMapApp
-   ```
+---
 
-2. **Install dependencies**:
-   ```sh
-   npm install
-   ```
+## 🛠 Tech Stack
 
-3. **Start the Expo server**:
-   ```sh
-   expo start
-   ```
+- **React Native**
+- **Expo**
+- **TypeScript**
+- **Expo Router**
+- **React Native Maps**
+- **AsyncStorage**
+- **REST API**
+- **JWT Authentication**
+- **Fetch API**
+- **Android / iOS**
 
-## Usage
-1. Start the app.
-2. Log in using the credentials provided by the backend:
-   - **Username**: `user`
-   - **Password**: `password`
-3. View locations on the map.
-4. Tap on the markers to view detailed information about each location.
+---
 
-## Architecture
-- **Frontend**: Built with React Native using TypeScript and Expo.
-- **Backend**: REST API implemented in Golang that uses JWT-based authentication.
-- **Map Integration**: Using `react-native-maps` to provide map functionality and display markers.
+## 📱 Screens
 
-## Screens Overview
+### Login Screen
 
-### 1. Login Screen (`index.tsx`)
-- Allows users to authenticate using their username and password.
-- Displays error messages for invalid credentials or missing fields.
+The login screen allows users to enter their username and password.  
+After successful authentication, the access token is saved locally using AsyncStorage and the user is redirected to the map screen.
 
-### 2. Map Screen (`MapScreen.tsx`)
-- Displays an interactive map using `react-native-maps`.
-- Fetches locations from the backend server after authentication.
-- Displays markers for each location with detailed information (address).
-- Handles expired tokens by redirecting users back to the login screen.
+### Map Screen
 
-## API Endpoints
-- **POST `/login`**: Authenticates users and generates an access token.
-  - **Request Body**: `{ "username": "string", "password": "string" }`
-  - **Response**: `{ "access_token": "string", "refresh_token": "string" }`
+The map screen retrieves the saved token, sends an authenticated request to the backend, fetches location data, filters invalid coordinates, and displays valid locations as markers on the map.
 
-- **GET `/locations`**: Fetches location data for authenticated users.
-  - **Headers**: `Authorization: Bearer <access_token>`
-  - **Response**: An array of location objects containing latitude, longitude, and formatted address.
+---
 
-## Folder Structure
+## 📁 Project Structure
 
-```
-DevCombineMapApp
-├── app
-│   ├── index.tsx                # Login Screen
-│   ├── MapScreen.tsx            # Map Screen with locations
-├── assets
-├── components                   # Shared UI components
-├── constants                    # Color and theme definitions
-├── hooks                        # Custom hooks
-├── node_modules                 # Node dependencies
-├── package.json                 # Project dependencies and scripts
-├── README.md                    # Project documentation
-└── ...
+```bash
+DevCombineMapApp/
+├── app/
+│   ├── index.tsx          # Login screen
+│   ├── MapScreen.tsx      # Map screen with markers
+│   └── _layout.tsx        # Expo Router stack layout
+├── constants/
+│   └── Colors.ts
+├── hooks/
+│   ├── useColorScheme.ts
+│   ├── useColorScheme.web.ts
+│   └── useThemeColor.ts
+├── app.json
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
-## Additional Information
+---
 
-### Troubleshooting Tips
-- **Login Issues**: Ensure that the backend server is running and reachable via the correct IP address.
-- **Token Expiration**: The app checks token validity before fetching location data. If the token is expired, the user will be redirected to the login screen.
+## ⚙️ Installation
 
-### Contact
-For any issues or questions, feel free to reach out to the project maintainer at [shahzad18111062@gmail.com].
+Clone the repository:
+
+```bash
+git clone https://github.com/Shahzadali062/DevCombineMapApp.git
+cd DevCombineMapApp
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the Expo development server:
+
+```bash
+npm start
+```
+
+Run on Android:
+
+```bash
+npm run android
+```
+
+Run on iOS:
+
+```bash
+npm run ios
+```
+
+Run on web:
+
+```bash
+npm run web
+```
+
+---
+
+## 🔐 Authentication Flow
+
+1. User enters username and password.
+2. App sends a login request to the backend API.
+3. Backend returns an access token.
+4. Token is saved locally using AsyncStorage.
+5. User is redirected to the map screen.
+6. Map screen reads the saved token.
+7. App sends an authenticated request to fetch locations.
+8. Valid locations are displayed as map markers.
+
+---
+
+## 🌐 API Endpoints
+
+### Login
+
+```http
+POST /login
+```
+
+Example request body:
+
+```json
+{
+  "username": "user",
+  "password": "password"
+}
+```
+
+Expected response:
+
+```json
+{
+  "access_token": "jwt_access_token",
+  "refresh_token": "jwt_refresh_token"
+}
+```
+
+---
+
+### Get Locations
+
+```http
+GET /locations
+```
+
+Required header:
+
+```http
+Authorization: Bearer <access_token>
+```
+
+Expected response:
+
+```json
+[
+  {
+    "latitude": 37.7893,
+    "longitude": -122.4108,
+    "formattedAddress": "925 Bush St, San Francisco, CA"
+  }
+]
+```
+
+---
+
+## 🗺 Map Functionality
+
+The app uses `react-native-maps` to display an interactive map.
+
+Location data is filtered before rendering, so records with invalid coordinates such as `0, 0` are not displayed.
+
+Each valid location is shown as a map marker.  
+When a user taps a marker, a callout displays the formatted address.
+
+---
+
+## 🧪 Scripts
+
+```bash
+npm start
+```
+
+Starts the Expo development server.
+
+```bash
+npm run android
+```
+
+Runs the app on an Android emulator or connected Android device.
+
+```bash
+npm run ios
+```
+
+Runs the app on an iOS simulator or connected iOS device.
+
+```bash
+npm run web
+```
+
+Runs the app in a web browser.
+
+```bash
+npm run lint
+```
+
+Runs Expo linting.
+
+```bash
+npm test
+```
+
+Runs Jest tests in watch mode.
+
+---
+
+## 📌 Use Cases
+
+This project can be used as a starter template for:
+
+- React Native authentication apps
+- JWT-based mobile login systems
+- Map-based mobile applications
+- Location marker visualization
+- Protected REST API integration
+- Expo Router mobile projects
+- Android/iOS map apps
+
+---
+
+## ⚠️ Security Note
+
+Before using this project in production:
+
+- Move backend URLs into environment variables
+- Do not hardcode local IP addresses in source code
+- Keep API keys private
+- Restrict Google Maps API keys from Google Cloud Console
+- Use secure token handling for production authentication
+- Add proper refresh-token handling and logout flow
+
+---
+
+## 🔮 Future Improvements
+
+- Add logout functionality
+- Add refresh token support
+- Move API base URL to environment variables
+- Add map search and filtering
+- Add user profile screen
+- Add better UI design for login and map screens
+- Add location clustering for large datasets
+- Add offline/error retry handling
+- Add Firebase or push notification support
+
+---
+
+## 👨‍💻 Author
+
+**Shahzad Ali**  
+React Native Developer | Mobile App Developer | AI Researcher
+
+- GitHub: https://github.com/Shahzadali062
+- LinkedIn: https://www.linkedin.com/in/shahzad-ali-989706251
+- Location: Bangkok, Thailand
+
+---
+
+## 📄 License
 
